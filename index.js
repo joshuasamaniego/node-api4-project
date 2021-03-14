@@ -1,8 +1,10 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const server = express();
 
 server.use(express.json());
+server.use(express.static(path.join(__dirname, 'client/build')));
 
 console.log(process.env.NODE_ENV);
 
@@ -13,8 +15,14 @@ if (process.env.NODE_ENV === 'development') {
     server.use(cors())
 }
 
-server.use("*", (req, res) => {
-    res.send('<h1>Success!</h1>');
+// Our API comes earlier in the pipeline
+server.get('/api/hello', (req, res) => {
+    res.json({ message: "Hello!" })
+})
+
+// Catch-all that just sends back the index.html
+server.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 })
 
 const PORT = process.env.PORT || 4000;
