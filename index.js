@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Our API comes earlier in the pipeline
 server.get('/api/hello', (req, res) => {
-    res.json({ message: "Hello!" })
+    res.json({ message: "Wassup!" })
 })
 
 // Catch-all that just sends back the index.html
