@@ -6,10 +6,16 @@ server.use(express.json());
 
 console.log(process.env.NODE_ENV);
 
-if (process.env.NODE_ENV === 'development') { // on Heroku machine, an env variable is called "NODE_ENV" -> "Production"
+// on Heroku machine, an env variable is called "NODE_ENV" -> "Production"
+
+if (process.env.NODE_ENV === 'development') { 
     const cors = require("cors");
     server.use(cors())
 }
+
+server.use("*", (req, res) => {
+    res.send('<h1>Success!</h1>');
+})
 
 const PORT = process.env.PORT || 4000;
 
